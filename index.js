@@ -11,6 +11,12 @@ const enumSubShape = {
   circle: "circle",
   star: "star",
   windmill: "windmill",
+  circlestar: "circlestar",
+  rectcircle: "rectcircle",
+  starrect: "starrect",
+  circlewindmill: "circlewindmill",
+  rectwindmill: "rectwindmill",
+  starwindmill: "starwindmill",
 };
 
 /** @enum {string} */
@@ -19,6 +25,12 @@ const enumSubShapeToShortcode = {
   [enumSubShape.circle]: "C",
   [enumSubShape.star]: "S",
   [enumSubShape.windmill]: "W",
+  [enumSubShape.circlestar]: "1",
+  [enumSubShape.rectcircle]: "2",
+  [enumSubShape.starrect]: "3",
+  [enumSubShape.circlewindmill]: "4",
+  [enumSubShape.rectwindmill]: "5",
+  [enumSubShape.starwindmill]: "6",
 };
 
 /** @enum {enumSubShape} */
@@ -268,6 +280,140 @@ function renderShape(layers) {
           context.closePath();
           break;
         }
+
+        case enumSubShape.circlestar: {
+          context.beginPath();
+          const dims = quadrantSize * layerScale;
+
+          let originX = insetPadding - quadrantHalfSize;
+          let originY = -insetPadding + quadrantHalfSize - dims;
+          const moveInwards = dims * 0.1;
+          const starPosition = dims * 0.55;
+          
+          context.moveTo(originX, originY);
+          context.arc(
+              originX,
+              originY + dims,
+              dims,
+              -Math.PI * 0.5,
+              -Math.PI * 0.35,
+          )
+          context.lineTo(originX + dims, originY);
+
+          context.lineTo(originX + dims - moveInwards, originY + starPosition);
+          context.arc(
+              originX,
+              originY + dims,
+              dims,
+              -Math.PI * 0.13,
+              0,
+          )
+          context.lineTo(originX, originY + dims);
+          context.closePath();
+          break;
+      }
+
+      case enumSubShape.rectcircle: {
+          context.beginPath();
+          const dims = quadrantSize * layerScale;
+
+          let originX = insetPadding - quadrantHalfSize;
+          let originY = -insetPadding + quadrantHalfSize - dims;
+          const moveInwards = dims * 0.3;
+          const moveOutwards = dims * 0.7;
+          
+          context.moveTo(originX, originY);
+          context.lineTo(originX + moveInwards, originY);
+          context.arc(
+              originX + moveInwards,
+              originY + moveOutwards,
+              moveOutwards,
+              -Math.PI * 0.5,
+              0,
+          )
+          context.lineTo(originX + dims, originY + dims);
+          context.lineTo(originX, originY + dims);
+          context.closePath();
+          break;
+      }
+
+      case enumSubShape.starrect: {
+          context.beginPath();
+          const dims = quadrantSize * layerScale;
+
+          let originX = insetPadding - quadrantHalfSize;
+          let originY = -insetPadding + quadrantHalfSize - dims;
+          const moveInwards = dims * 0.1;
+          const moveOutwards = dims * 0.9;
+          const starStart = dims * 0.4;
+          const starEnd = dims * 0.6;
+          
+          context.moveTo(originX, originY + moveInwards);
+          context.lineTo(originX + starStart, originY + moveInwards);
+          context.lineTo(originX + dims, originY);
+          context.lineTo(originX + moveOutwards, originY + starEnd);
+          context.lineTo(originX + moveOutwards, originY + dims);
+          context.lineTo(originX, originY + dims);
+
+
+
+          context.closePath();
+          break;
+      }
+
+      case enumSubShape.circlewindmill: {
+          context.beginPath();
+          const dims = quadrantSize * layerScale;
+
+          let originX = insetPadding - quadrantHalfSize;
+          let originY = -insetPadding + quadrantHalfSize - dims;
+          const moveInwards = dims * 0.4;
+          const circlePosition = dims * 0.5;
+          context.moveTo(originX, originY + moveInwards);
+          context.lineTo(originX + circlePosition, originY);
+          context.arc(
+              originX + circlePosition,
+              originY + circlePosition,
+              circlePosition,
+              -Math.PI * 0.5,
+              0,
+          )
+          context.lineTo(originX + dims, originY + dims);
+          context.lineTo(originX, originY + dims);
+          context.closePath();
+          break;
+      }
+
+      case enumSubShape.rectwindmill: {
+          context.beginPath();
+          const dims = quadrantSize * layerScale;
+
+          let originX = insetPadding - quadrantHalfSize;
+          let originY = -insetPadding + quadrantHalfSize - dims;
+          const moveInwards = dims * 0.1;
+          context.moveTo(originX, originY + moveInwards);
+          context.lineTo(originX + dims, originY + moveInwards);
+          context.lineTo(originX + dims, originY + dims);
+          context.lineTo(originX, originY + dims);
+          context.closePath();
+          break;
+      }
+
+      case enumSubShape.starwindmill: {
+          context.beginPath();
+          const dims = quadrantSize * layerScale;
+
+          let originX = insetPadding - quadrantHalfSize;
+          let originY = -insetPadding + quadrantHalfSize - dims;
+          const moveInwards = dims * 0.4;
+          const moveOutwards = dims * 0.8;
+          context.moveTo(originX, originY + moveInwards);
+          context.lineTo(originX + dims, originY);
+          context.lineTo(originX + moveOutwards, originY + dims);
+          context.lineTo(originX, originY + dims);
+          context.closePath();
+          break;
+      }
 
         default: {
           assertAlways(false, "Unkown sub shape: " + subShape);
